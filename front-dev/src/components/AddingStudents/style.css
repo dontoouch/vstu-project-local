@@ -23,10 +23,11 @@
 }
 
 .modal__content {
+    max-width: 1000px;
+    min-height: 50vh;
     padding: 20px;
     border-radius: 12px;
     background-color: rgb(255, 255, 255);
-    width: 600px;
     transform: scale(0.5);
     transition: 0.4s all;
 }

@@ -30,6 +30,7 @@ const GridExample = ({
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
   const [modalEditActive, setModalEditActive] = useState(false);
   const [modalAdd, setModalAdd] = useState(false);
+  const [modalChar, setModalChar] = useState(false);
 
   useEffect(() => {
     getRoomsThunk();
@@ -299,6 +300,16 @@ const GridExample = ({
     }
   }
 
+  const OpenChar = () => {
+    const selectedData = gridRef.current.api.getSelectedRows();
+    if (selectedData[0] !== undefined) {
+      setModalChar(true);
+      return selectedData[0];
+    } else {
+      alert("Выберите студента");
+    }
+  };
+
   const OnAddStudents = () => {
     setModalAdd(true);
   };
@@ -340,14 +351,14 @@ const GridExample = ({
         data={onEditableSelected}
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
-      <ModalChar active={modalEditActive} setActive={setModalEditActive} data={onEditableSelected}/>
+      <ModalChar active={modalChar} setActive={setModalChar} data={OpenChar}/>
       <div style={{ height: "1000px" }}>
         <button className="btn-control" onClick={onRemoveSelected}>Удалить студента</button>
         <button className="btn-control" onClick={onEditableSelected}>Изменить студента</button>
         <button className="btn-control" type="button" onClick={OnAddStudents}>
           Добавить студента
         </button>
-        <button className="btn-control" type="button" onClick={onEditableSelected}>Характеристика</button>
+        <button className="btn-control" type="button" onClick={OpenChar}>Характеристика</button>
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             ref={gridRef}

@@ -44,7 +44,8 @@ const overWriteData = () => {
           className={active ? "modal__content active" : "modal__content"}
           onClick={(e) => e.stopPropagation()}
         >
-          <form className="form" action="#">
+            <h3>Характеристика</h3>
+          {/* <form className="form" action="#">
             <button onClick={getSelectedRow} type="button" formtarget="blank">
               Получить данные выбранного студента
             </button>
@@ -92,8 +93,8 @@ const overWriteData = () => {
               />
             </div>
             <button type="button" formtarget="blank" onClick={overWriteData} >Принять Данные</button>
-            {/* <button type="button" formtarget="blank" onClick={postData} >Отправить</button> */}
-          </form>
+            {/* <button type="button" formtarget="blank" onClick={postData} >Отправить</button> 
+          </form> */}
         </div>
       </div>
     )
