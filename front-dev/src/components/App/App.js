@@ -6,6 +6,7 @@ import RequireAuth from "../../hoc/RequireAuth";
 import Layout from "../Layout";
 
 import GridExample from "../Grid/Grid";
+import Characteristic from "../Characteristic/index.jsx";
 
 function App() {
   return (
@@ -13,14 +14,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />}></Route>
-          <Route
-            path="/main"
-            element={
+          <Route path="/main" element={
               <RequireAuth role={["USER", "HEAD_OF_DEPARTMENT", "RECTOR"]}>
                 <GridExample/>
               </RequireAuth>
             }
           />
+          <Route path="char" element={<Characteristic/>}/>
+
         </Route>
       </Routes>
     </AuthProvider>

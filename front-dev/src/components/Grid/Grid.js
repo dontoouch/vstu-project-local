@@ -17,7 +17,8 @@ import {
 import { connect } from "react-redux";
 import ModalEdit from "../ModalEdit/ModalEdit";
 import AddingStudents from "../AddingStudents";
-import ModalChar from "../ModalChar"
+import ModalChar from "../Characteristic"
+import { Link, NavLink } from "react-router-dom";
 
 const GridExample = ({
   rooms,
@@ -300,15 +301,15 @@ const GridExample = ({
     }
   }
 
-  const OpenChar = () => {
-    const selectedData = gridRef.current.api.getSelectedRows();
-    if (selectedData[0] !== undefined) {
-      setModalChar(true);
-      return selectedData[0];
-    } else {
-      alert("Выберите студента");
-    }
-  };
+  // const OpenChar = () => {
+  //   const selectedData = gridRef.current.api.getSelectedRows();
+  //   if (selectedData[0] !== undefined) {
+  //     setModalChar(true);
+  //     return selectedData[0];
+  //   } else {
+  //     alert("Выберите студента");
+  //   }
+  // };
 
   const OnAddStudents = () => {
     setModalAdd(true);
@@ -351,14 +352,15 @@ const GridExample = ({
         data={onEditableSelected}
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
-      <ModalChar active={modalChar} setActive={setModalChar} data={OpenChar}/>
+      {/* <ModalChar active={modalChar} setActive={setModalChar} data={OpenChar}/> */}
       <div style={{ height: "1000px" }}>
         <button className="btn-control" onClick={onRemoveSelected}>Удалить студента</button>
         <button className="btn-control" onClick={onEditableSelected}>Изменить студента</button>
         <button className="btn-control" type="button" onClick={OnAddStudents}>
           Добавить студента
         </button>
-        <button className="btn-control" type="button" onClick={OpenChar}>Характеристика</button>
+        {/* <button className="btn-control" type="button" onClick={OpenChar}>Характеристика</button> */}
+        <NavLink to="/char" className="btn-control">Характеристика</NavLink>
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             ref={gridRef}
