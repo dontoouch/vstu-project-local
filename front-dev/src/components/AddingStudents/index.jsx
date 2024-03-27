@@ -15,8 +15,8 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
   const [roomsData, setRoomsData] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.11.57:18076/api/hostels/1/rooms", {
-    // fetch("http://localhost:3001/room", {
+    // fetch("http://192.168.11.57:18076/api/hostels/1/rooms", {
+    fetch("http://localhost:3001/room", {
       headers: {
         Authorization:
           "Bearer " + JSON.parse(localStorage.getItem("user"))["access_token"],
@@ -25,8 +25,8 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
       .then((resp) => resp.json())
       .then((data) => setRoomsData(data));
 
-      fetch("http://192.168.11.57:18076/api/students/needHostel", {
-    // fetch("http://localhost:3002/needHostel", {
+      // fetch("http://192.168.11.57:18076/api/students/needHostel", {
+    fetch("http://localhost:3002/needHostel", {
       headers: {
         Authorization:
           "Bearer " + JSON.parse(localStorage.getItem("user"))["access_token"],
@@ -89,8 +89,8 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
       
       if (((currentType === "BIG" && roomLength < 3) || (currentType ==='LITTLE' && roomLength < 2)) && foundStudent !== undefined) {
         const response = await fetch(
-          `http://192.168.11.57:18076/api/hostels/rooms/${foundRoom.id}/students?studentId=${foundStudent.id}`,
-          // `http://localhost:3001/room/${foundRoom.id}/students/${foundStudent.id}`,
+          // `http://192.168.11.57:18076/api/hostels/rooms/${foundRoom.id}/students?studentId=${foundStudent.id}`,
+          `http://localhost:3001/room/${foundRoom.id}/students/${foundStudent.id}`,
           {
             method: "POST",
             headers: {

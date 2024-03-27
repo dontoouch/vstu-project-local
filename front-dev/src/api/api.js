@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const defaultOptionsPatent = {
-  baseURL: "http://192.168.11.57:18076/",
-  // baseURL:"http://localhost:3001",
+  // baseURL: "http://192.168.11.57:18076/",
+  baseURL:"http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
@@ -27,8 +27,8 @@ export const unAuthorized = (error) => {
 
 export  const getRooms = () => {
   return baseRoutPatent
-    .get(`/api/hostels/`)
-    // .get(`/room`)
+    // .get(`/api/hostels/`)
+    .get(`/room`)
     .then((response) => {
       return response.data;
     })

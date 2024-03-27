@@ -17,6 +17,7 @@ import {
 import { connect } from "react-redux";
 import ModalEdit from "../ModalEdit/ModalEdit";
 import AddingStudents from "../AddingStudents";
+import ModalChar from "../ModalChar"
 
 const GridExample = ({
   rooms,
@@ -268,8 +269,8 @@ const GridExample = ({
         remove: selectedData,
       });
       const response = fetch(
-        `http://192.168.11.57:18076/api/hostels/rooms/${selectedData[0].id}/students?studentId=${selectedData[0].students.id}`,
-        // `http://localhost:3001/room/${selectedData[0].id}`,
+        // `http://192.168.11.57:18076/api/hostels/rooms/${selectedData[0].id}/students?studentId=${selectedData[0].students.id}`,
+        `http://localhost:3001/room/${selectedData[0].id}`,
         {
           method: "DELETE",
           headers: {
@@ -339,12 +340,14 @@ const GridExample = ({
         data={onEditableSelected}
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
+      <ModalChar active={modalEditActive} setActive={setModalEditActive} data={onEditableSelected}/>
       <div style={{ height: "1000px" }}>
-        <button onClick={onRemoveSelected}>Удалить студента</button>
-        <button onClick={onEditableSelected}>Изменить студента</button>
-        <button type="button" onClick={OnAddStudents}>
+        <button className="btn-control" onClick={onRemoveSelected}>Удалить студента</button>
+        <button className="btn-control" onClick={onEditableSelected}>Изменить студента</button>
+        <button className="btn-control" type="button" onClick={OnAddStudents}>
           Добавить студента
         </button>
+        <button className="btn-control" type="button" onClick={onEditableSelected}>Характеристика</button>
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             ref={gridRef}
