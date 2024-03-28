@@ -81,7 +81,7 @@ const Characteristic = ({
       : "unknown";
 
     return (  
-      <div>
+      <div className="container">
         <div className="header-char">
           <h3>Характеристика</h3>
           <div className="select-char">
@@ -106,6 +106,23 @@ const Characteristic = ({
                 }
               />
           </div>
+        </div>
+        <div className="main-char">
+          <p>ФИО - {currentName}</p>
+          <p>День рождения</p>
+          <p>Родители(Номера,ФИО)</p>
+          <p>Номер общежития</p>
+          <p>Номер комнаты - {currentRoom}</p>
+          <p>Группа</p>
+          <p>Курс</p>
+          <p>Факультет</p>
+          <p>Общ.занятость</p>
+          <p>Взыскания</p>
+          <p>Льготы</p>
+          <p>Номер телефона</p> 
+          <p>Домашний адрес</p>
+          <p>Соседи(ФИО, номера)</p>
+
         </div>
       </div>
     )

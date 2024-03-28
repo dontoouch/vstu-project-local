@@ -90,7 +90,7 @@ const overWriteData = () => {
                   type="text"
                   placeholder="Фамилия"
                   id="Фамилия"
-                  value={activeBtn ? inputValue.students.surname : "Нет данных"}
+                  value={activeBtn ? inputValue.students.surname ? inputValue.students.surname : "Нет данных" : "Нет данных"}
                 />
               </div>
               <div className="form__input-wrap">
@@ -100,7 +100,7 @@ const overWriteData = () => {
                   type="text"
                   placeholder="Имя"
                   id="Имя"
-                  value={activeBtn ? inputValue.students.name: "Нет данных"}
+                  value={activeBtn ? inputValue.students.name ? inputValue.students.name : "Нет данных" : "Нет данных"}
                 />
               </div>
               <div className="form__input-wrap">
@@ -110,7 +110,7 @@ const overWriteData = () => {
                   type="text"
                   placeholder="Отчество"
                   id="Отчество"
-                  value={activeBtn ? inputValue.students.patronymic : "Нет данных"}  
+                  value={activeBtn ? inputValue.students.patronymic ? inputValue.students.patronymic : "Нет данных" : "Нет данных"}  
                 />
               </div>
               
@@ -122,7 +122,7 @@ const overWriteData = () => {
                   type="text"
                   placeholder="Курс"
                   id="Курс"
-                  // value={activeBtn ? inputValue.students.surname : "Нет данных"}
+                  value={activeBtn ? (inputValue.students.group.currentCourse ? inputValue.students.group.currentCourse : "Нет данных") : "Нет данных"}
                 />
               </div>
               <div className="form__input-wrap">
@@ -132,7 +132,7 @@ const overWriteData = () => {
                   type="text"
                   placeholder="Факультет"
                   id="Факультет"
-                  // value={activeBtn ? inputValue.students.surname : "Нет данных"}
+                  value={activeBtn ? (inputValue.students.specialization.name ? inputValue.students.specialization.name : "Нет данных") : "Нет данных"}
                 />
               </div>
               <div className="form__input-wrap">
@@ -142,7 +142,7 @@ const overWriteData = () => {
                   type="text"
                   placeholder="Группа"
                   id="Группа"
-                  // value={activeBtn ? inputValue.students.surname : "Нет данных"}
+                  value={activeBtn ? (inputValue.students.group.name ? inputValue.students.group.name : "Нет данных")  : "Нет данных"}
                 />
               </div>
               <div className="form__input-wrap">
@@ -172,7 +172,7 @@ const overWriteData = () => {
                 type="text"
                 placeholder="№ комнаты"
                 id="№ комнаты"
-                value={activeBtn ? inputValue.roomNumber   : 'Нет данных' }
+                value={activeBtn ? (inputValue.roomNumber ? inputValue.roomNumber : "Нет данных") : 'Нет данных' }
                 onChange={(e)=> setInputValue(e.target.value)}
               />
             </div>
@@ -197,8 +197,7 @@ const overWriteData = () => {
                 type="text"
                 placeholder="Статус обучения"
                 id="Статус обучения"
-                // value={activeBtn ? inputValue.roomNumber   : 'Нет данных' }
-                // onChange={(e)=> setInputValue(e.target.value)}
+                value={activeBtn ? (inputValue.students.group.spec.status ? (inputValue.students.group.spec.status === 'ACTIVE' ? "Активен" : "Не активен") : "Нет данных") : "Нет данных"}
               />
             </div>
             <div className="form__input-wrap">
@@ -208,8 +207,7 @@ const overWriteData = () => {
                 type="text"
                 placeholder="Период обучения"
                 id="Период обучения"
-                // value={activeBtn ? inputValue.roomNumber   : 'Нет данных' }
-                // onChange={(e)=> setInputValue(e.target.value)}
+                value={activeBtn ? `${inputValue.students.group.yearStart ? inputValue.students.group.yearStart : "Нет данных"}-${inputValue.students.group.yearEnd ? inputValue.students.group.yearEnd : "Нет данных"}` : "Нет данных"}
               />
             </div>
             <div className="form__input-wrap">
@@ -226,7 +224,7 @@ const overWriteData = () => {
           </form>
           <h4>Период обучения</h4>
           <h4>Домашний адрес</h4>
-          <h4>Контактный телефон</h4>
+          {/* <h4>Контактный телефон - {inputValue.students.phone ? inputValue.students.phone : "Нет данных"}</h4> */}
         </div>
       </div>
     )

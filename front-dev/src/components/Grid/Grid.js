@@ -17,8 +17,7 @@ import {
 import { connect } from "react-redux";
 import ModalEdit from "../ModalEdit/ModalEdit";
 import AddingStudents from "../AddingStudents";
-import ModalChar from "../Characteristic"
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const GridExample = ({
   rooms,
@@ -31,7 +30,6 @@ const GridExample = ({
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
   const [modalEditActive, setModalEditActive] = useState(false);
   const [modalAdd, setModalAdd] = useState(false);
-  const [modalChar, setModalChar] = useState(false);
 
   useEffect(() => {
     getRoomsThunk();

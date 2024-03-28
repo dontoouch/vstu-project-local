@@ -1,3 +1,13 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-style: bold;
+    font-size: 16px;
+    line-height: 19px;
+    color: black;
+}
+
 .header-char {
     display: flex;
     flex-direction: column;
@@ -8,9 +18,12 @@
 
 .select-char {
     width: 100%;
-    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     gap: 20px;
     padding: 20px 0px;
+}
+
+.main-char {
+    padding: 20px 20px;
 }
