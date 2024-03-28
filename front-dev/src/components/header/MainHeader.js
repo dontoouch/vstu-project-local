@@ -19,7 +19,7 @@ function MainHeader(s) {
             window.location.href = "/";
           }}
         >
-          Заполнялка диплома УО «ВГТУ»
+          Мониторинг студенческих общежитий
         </div>
       </h1>
 
