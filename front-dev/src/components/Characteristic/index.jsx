@@ -135,20 +135,20 @@ const Characteristic = ({
           </div>
         </div>
         <div className="main-char">
-          <p>ФИО - {currentName}</p>
-          <p>День рождения</p>
-          <p>Родители(Номера,ФИО)</p>
-          <p>Номер общежития - {selectedStudents.hostel !== undefined ? (selectedStudents.hostel === 'HOSTEL_3' ? "3" : "2") : "Нет данных"}</p>
-          <p>Номер комнаты - {selectedStudents !== undefined ? `${selectedStudents.roomNumber} ${selectedStudents.roomType === "LITTLE" ? "М" : "Б"}` : "Нет данных"}</p>
-          <p>Группа - {selectedStudents.students !== undefined ? selectedStudents.students.group !== undefined ? selectedStudents.students.group.name : "Нет данных" : "Нет данных"}</p>
-          <p>Курс - {selectedStudents.students !== undefined ? selectedStudents.students.group !== undefined ? selectedStudents.students.group.currentCourse : "Нет данных": "Нет данных"}</p>
-          <p>Факультет - {selectedStudents.students !== undefined ? selectedStudents.students.group !== undefined ? selectedStudents.students.group.spec !== undefined ? selectedStudents.students.group.spec.name : "Нет данных" : "Нет данных" : "Нет данных"}</p>
-          <p>Общ.занятость</p>
-          <p>Взыскания</p>
-          <p>Льготы</p>
-          <p>Номер телефона - {selectedStudents.students !== undefined ? selectedStudents.students.phone : "Нет данных"}</p> 
-          <p>Домашний адрес - {selectedStudents.students !== undefined ? selectedStudents.students.addressCity : "Нет данных"}</p>
-          <p>Соседи(ФИО, номера)</p>
+          <p className="char-filed">ФИО - {currentName}</p>
+          <p className="char-filed">День рождения</p>
+          <p className="char-filed">Родители(Номера,ФИО)</p>
+          <p className="char-filed">Номер общежития - {selectedStudents.hostel !== undefined ? (selectedStudents.hostel === 'HOSTEL_3' ? "3" : "2") : "Нет данных"}</p>
+          <p className="char-filed">Номер комнаты - {selectedStudents !== undefined ? `${selectedStudents.roomNumber} ${selectedStudents.roomType === "LITTLE" ? "М" : "Б"}` : "Нет данных"}</p>
+          <p className="char-filed">Группа - {selectedStudents.students !== undefined ? selectedStudents.students.group !== undefined ? selectedStudents.students.group.name : "Нет данных" : "Нет данных"}</p>
+          <p className="char-filed">Курс - {selectedStudents.students !== undefined ? selectedStudents.students.group !== undefined ? selectedStudents.students.group.currentCourse : "Нет данных": "Нет данных"}</p>
+          <p className="char-filed">Факультет - {selectedStudents.students !== undefined ? selectedStudents.students.group !== undefined ? selectedStudents.students.group.spec !== undefined ? selectedStudents.students.group.spec.name : "Нет данных" : "Нет данных" : "Нет данных"}</p>
+          <p className="char-filed">Общ.занятость</p>
+          <p className="char-filed">Взыскания</p>
+          <p className="char-filed">Льготы</p>
+          <p className="char-filed">Номер телефона - {selectedStudents.students !== undefined ? selectedStudents.students.phone : "Нет данных"}</p> 
+          <p className="char-filed">Домашний адрес - {selectedStudents.students !== undefined ? selectedStudents.students.addressCity : "Нет данных"}</p>
+          <p className="char-filed">Соседи(ФИО, номера)</p>
 
         </div>
       </div>
