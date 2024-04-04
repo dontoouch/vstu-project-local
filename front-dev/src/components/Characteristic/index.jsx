@@ -114,6 +114,16 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
                 : ""
             }
           />
+          <Select
+            className="select-content"
+            options={optionsRoom}
+            onChange={setRoom}
+            value={
+              currentRoom
+                ? optionsRoom.find((c) => c.value === currentRoom)
+                : ""
+            }
+          />
 
         </div>
       </div>
