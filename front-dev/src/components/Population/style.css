@@ -5,13 +5,20 @@
     /* gap: 50px; */
 }
 
-.checkboxContainer {
+.navContainer {
     width: 100%;
     max-width: 500px;
     display: flex;
+    gap: 40px;
+    padding: 20px 15px;
+    align-items: center;
+}
+
+
+.checkboxContainer {
+    display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px 15px;
 }
 
 .checkboxStyle {
@@ -27,3 +34,22 @@
 .checkboxStyle>label {
     font-size: 20px;
 }
+
+.btn-back {
+    max-width: 120px;
+    width: 100%;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 20px;
+    background-color: #374b7d;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background-color: #434c63;
+  }

@@ -1,6 +1,7 @@
 import "./style.css";
 
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 // import {
 //   getRoomsThunk,
 //   setRoomThunk,
@@ -103,6 +104,7 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
       <div className="header-char">
         <h3>Характеристика</h3>
         <div className="select-char">
+          <NavLink to="/main" className="btn-back">Назад</NavLink>
           <Select
             className="select-content"
             options={optionsName}
