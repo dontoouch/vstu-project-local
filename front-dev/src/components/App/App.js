@@ -7,6 +7,7 @@ import Layout from "../Layout";
 
 import GridExample from "../Grid/Grid";
 import Characteristic from "../Characteristic/index.jsx";
+import Population from "../Population/Population.jsx";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             }
           />
           <Route path="char" element={<Characteristic/>}/>
-
+          <Route path="population" element={<Population />}/>
         </Route>
       </Routes>
     </AuthProvider>

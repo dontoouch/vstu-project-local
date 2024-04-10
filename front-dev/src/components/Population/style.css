@@ -1,0 +1,29 @@
+.containerPop {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* gap: 50px; */
+}
+
+.checkboxContainer {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 15px;
+}
+
+.checkboxStyle {
+    display: flex;
+    gap: 10px;
+}
+
+.checkboxStyle>input {
+    width: 20px;
+    height: 20px;
+}
+
+.checkboxStyle>label {
+    font-size: 20px;
+}
