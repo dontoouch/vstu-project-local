@@ -8,7 +8,7 @@ import MaleFemaleBlock from "../MaleFemaleBlock";
 const Population = () => {
   const [popRoom, setPopRoom] = useState(true);
   const [maleFemale, setMaleFemale] = useState(false);
-  console.log(popRoom);
+
 
   return (
     <div className="containerPop">
