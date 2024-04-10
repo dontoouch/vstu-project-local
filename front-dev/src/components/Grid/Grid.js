@@ -350,15 +350,15 @@ const GridExample = ({
         data={onEditableSelected}
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
-      {/* <ModalChar active={modalChar} setActive={setModalChar} data={OpenChar}/> */}
       <div style={{ height: "1000px" }}>
         <button className="btn-control" onClick={onRemoveSelected}>Удалить студента</button>
         <button className="btn-control" onClick={onEditableSelected}>Изменить студента</button>
         <button className="btn-control" type="button" onClick={OnAddStudents}>
           Добавить студента
         </button>
-        {/* <button className="btn-control" type="button" onClick={OpenChar}>Характеристика</button> */}
+
         <NavLink to="/char" className="btn-control">Характеристика</NavLink>
+        <NavLink to="/population" className="btn-control">Кол-во свободных комнат</NavLink>
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             ref={gridRef}

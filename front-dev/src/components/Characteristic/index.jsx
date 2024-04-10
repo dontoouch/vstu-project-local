@@ -150,8 +150,8 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
                 {selectedStudents.students !== undefined
                   ? selectedStudents.students.group !== undefined
                     ? selectedStudents.students.group.spec !== undefined
-                      ? selectedStudents.students.group.spec.department.faculty
-                          .shortName
+                      ? selectedStudents.students.group.spec
+                          .name
                       : "Нет данных"
                     : "Нет данных"
                   : "Нет данных"}
