@@ -13,6 +13,7 @@ import {
   getRoomsThunk,
   setRoomThunk,
   deleteRoomsThunk,
+  setSelectedRoomThunk,
 } from "../../redux/actions/mainThunks";
 import { connect } from "react-redux";
 import ModalEdit from "../ModalEdit/ModalEdit";
@@ -23,6 +24,7 @@ const GridExample = ({
   rooms,
   getRoomsThunk,
   setRoomThunk,
+  setSelectedRoomThunk,
   deleteRoomsThunk,
 }) => {
   const gridRef = useRef();
@@ -190,7 +192,7 @@ const GridExample = ({
     console.log(
       "onCellValueChanged: " + event.colDef.field + " = " + event.newValue
     );
-    const response = fetch(
+    fetch(
       `http://192.168.11.57:18076/api/students/${
         event.data.students.id
       }/?approved=${event.data.students.approved === "Да" ? true : false}`,
@@ -265,10 +267,10 @@ const GridExample = ({
     let conf = confirm("Вы точно хотите удалить студента?");
 
     if (conf) {
-      const res = gridRef.current.api.applyTransaction({
+      gridRef.current.api.applyTransaction({
         remove: selectedData,
       });
-      const response = fetch(
+      fetch(
         // `http://192.168.11.57:18076/api/hostels/rooms/${selectedData[0].id}/students?studentId=${selectedData[0].students.id}`,
         `http://localhost:3001/room/${selectedData[0].id}`,
         {
@@ -291,6 +293,7 @@ const GridExample = ({
 
   function onEditableSelected() {
     const selectedData = gridRef.current.api.getSelectedRows();
+    // setSelectedRoomThunk(selectedData[0]);
     if (selectedData[0] !== undefined) {
       setModalEditActive(true);
       return selectedData[0];
@@ -393,6 +396,7 @@ export default connect(mapStateToProps, {
   getRoomsThunk,
   setRoomThunk,
   deleteRoomsThunk,
+  setSelectedRoomThunk,
   // getStudentsThunk,
 })(GridExample);
 
