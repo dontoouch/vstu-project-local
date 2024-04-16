@@ -3,11 +3,13 @@ import React, {
     useRef,
     useState,
     useEffect,
+    useCallback,
   } from "react";
   import {
     getRoomsThunk,
     setRoomThunk,
     deleteRoomsThunk,
+    setSelectedRoomThunk,
   } from "../../redux/actions/mainThunks";
 
   import { connect } from "react-redux";
@@ -15,10 +17,12 @@ import React, {
   import "ag-grid-enterprise";
   import "ag-grid-community/styles/ag-grid.css";
   import "ag-grid-community/styles/ag-theme-alpine.css";
+import { ColumnGroup } from "ag-grid-enterprise";
 
 const PopulationGrid = ({
     rooms,
     getRoomsThunk,
+    setSelectedRoomThunk,
   }) => {
     const gridRef = useRef();
     const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
@@ -26,8 +30,9 @@ const PopulationGrid = ({
 
 
     useEffect(() => {
-        getRoomsThunk();
+      getRoomsThunk();
       }, []);
+
 
     const [columnDefs, setColumnDefs] = useState([
         {
@@ -101,12 +106,20 @@ const PopulationGrid = ({
         };
       }, []);
 
+      const gridOptions = {
+        onRowClicked: event => {
+          console.log(event.data);
+          setSelectedRoomThunk([event.data]);
+        }
+    }
+
+
   return (
     <div style={containerStyle}>
 
         <div style={gridStyle} className="ag-theme-alpine">
             <AgGridReact
-                // ref={gridRef}
+                ref={gridRef}
                 colResizeDefault={"shift"}
                 // localeText={localeText}
                 groupDisplayType="multiplyColumns"
@@ -118,6 +131,8 @@ const PopulationGrid = ({
                 defaultColGroupDef={defaultColGroupDef}
                 columnTypes={columnTypes}
                 rowSelection="single"
+                // onGridReady= {onGridReady}
+                gridOptions = {gridOptions}
             />
         </div>
     </div>
@@ -129,6 +144,7 @@ const PopulationGrid = ({
 let mapStateToProps = (state) => {
     return {
       rooms: state.mainPage.rooms,
+      selectedRoom:state.additional.room
       // students: state.mainPage.students,
     };
   };
@@ -137,4 +153,5 @@ let mapStateToProps = (state) => {
     getRoomsThunk,
     setRoomThunk,
     deleteRoomsThunk,
+    setSelectedRoomThunk
   })(PopulationGrid);

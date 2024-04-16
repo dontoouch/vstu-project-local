@@ -53,3 +53,32 @@
 .btn-back:hover {
     background-color: #434c63;
   }
+
+  .gridTable {
+    width: 60%;
+  }
+
+  main {
+    display: flex;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 40%;
+    padding: 12px 20px;
+    border-top: 1px #babfc7 solid;
+    border-bottom: 1px #babfc7 solid;
+  }
+
+  .sidebar>h2 {
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .sidebarBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }

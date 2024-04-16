@@ -1,4 +1,4 @@
-import {SET_ROOMS , SET_ROOM , DELETE_ROOM, ADD_STUDENT } from "../types/mainTypes";
+import {SET_ROOMS , SET_ROOM , DELETE_ROOM, ADD_STUDENT, SET_SELECTED_ROOM , GET_SELECTED_ROOM } from "../types/mainTypes";
 // import {SET_ROOMS, SET_STUDENTS } from "../types/mainTypes";
 export const setRooms = (rooms) => ({
   type: SET_ROOMS,
@@ -7,6 +7,16 @@ export const setRooms = (rooms) => ({
 export const setRoom = (rooms) => ({
   type: SET_ROOM,
   rooms: rooms,
+});
+
+export const setSelectedRoom = (selectedRoom) => ({
+  type: SET_SELECTED_ROOM,
+  selectedRoom: selectedRoom,
+});
+
+export const getSelectedRoom = (action,state) => ({
+  type: GET_SELECTED_ROOM,
+  // selectedRoom: state,
 });
 
 export const addStudent = (roomStudent) => ({
