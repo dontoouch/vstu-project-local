@@ -18,6 +18,7 @@ import {
 import { connect } from "react-redux";
 import ModalEdit from "../ModalEdit/ModalEdit";
 import AddingStudents from "../AddingStudents";
+import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
 
 const GridExample = ({
@@ -235,9 +236,14 @@ const GridExample = ({
     };
   }, []);
 
+  const gridOptions = {
+    onGridReady: (event) => event.api.sizeColumnsToFit()
+   };
+
   const onGridReady = useCallback(
-    (rooms) => {
+    (rooms) => {    
       if (rooms !== undefined) {
+        
         rooms.forEach((item) => {
           if (item.students.length > 0) {
             item.students.forEach((st) => {
@@ -248,6 +254,7 @@ const GridExample = ({
             });
           }
         });
+        // setIsLoading(false)
       }
     },
     [rooms]
@@ -258,6 +265,8 @@ const GridExample = ({
   const updateDataStudents = (room) => {
     tempArr.push(room);
     setRoomThunk(tempArr);
+    
+    
   };
 
   const onRemoveSelected = useCallback(() => {
@@ -316,9 +325,15 @@ const GridExample = ({
     setModalAdd(true);
   };
 
-  const autosizeColumn = (params) => {
-    params.api.sizeColumnsToFit();
-  };
+  // const autosizeColumn = (params) => {
+  //   params.api.autoSizeAllColumns();
+  // };
+
+ 
+  
+
+  const loadingCellRenderer = useCallback(<Loader/>);
+
 
   const localeText = useMemo(() => {
     return {
@@ -377,8 +392,13 @@ const GridExample = ({
             columnTypes={columnTypes}
             onGridReady={onGridReady(rooms)}
             rowSelection="single"
-            autosizeColumn={autosizeColumn}
+            // autosizeColumn={autosizeColumn}
+            gridOptions = {gridOptions}
+            loadingCellRenderer={loadingCellRenderer}
+            
           />
+          
+        
         </div>
       </div>
     </div>
