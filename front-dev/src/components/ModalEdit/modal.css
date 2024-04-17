@@ -31,7 +31,7 @@
     align-items: center;
     max-width: 1000px;
     min-height: 80vh;
-    padding: 10px;
+    padding: 20px 15px;
     gap: 15px;
     border-radius: 12px;
     background-color: rgb(255, 255, 255);
@@ -88,3 +88,30 @@ label {
     justify-content: space-around;
     gap: 100px;
 }
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+  
