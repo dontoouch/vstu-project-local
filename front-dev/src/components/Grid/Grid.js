@@ -237,7 +237,10 @@ const GridExample = ({
   }, []);
 
   const gridOptions = {
-    onGridReady: (event) => event.api.sizeColumnsToFit()
+    onGridReady: (event) => event.api.sizeColumnsToFit(),
+    isGroupOpenByDefault : (params) => {
+      return params.field === 'hostel'
+    }
    };
 
   const onGridReady = useCallback(
@@ -395,7 +398,6 @@ const GridExample = ({
             // autosizeColumn={autosizeColumn}
             gridOptions = {gridOptions}
             loadingCellRenderer={loadingCellRenderer}
-            
           />
           
         
