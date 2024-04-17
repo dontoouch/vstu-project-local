@@ -21,13 +21,7 @@ import AddingStudents from "../AddingStudents";
 import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
 
-const GridExample = ({
-  rooms,
-  getRoomsThunk,
-  setRoomThunk,
-  setSelectedRoomThunk,
-  deleteRoomsThunk,
-}) => {
+const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
   const gridRef = useRef();
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
@@ -238,15 +232,14 @@ const GridExample = ({
 
   const gridOptions = {
     onGridReady: (event) => event.api.sizeColumnsToFit(),
-    isGroupOpenByDefault : (params) => {
-      return params.field === 'hostel'
-    }
-   };
+    isGroupOpenByDefault: (params) => {
+      return params.field === "hostel";
+    },
+  };
 
   const onGridReady = useCallback(
-    (rooms) => {    
+    (rooms) => {
       if (rooms !== undefined) {
-        
         rooms.forEach((item) => {
           if (item.students.length > 0) {
             item.students.forEach((st) => {
@@ -257,7 +250,6 @@ const GridExample = ({
             });
           }
         });
-        // setIsLoading(false)
       }
     },
     [rooms]
@@ -268,8 +260,6 @@ const GridExample = ({
   const updateDataStudents = (room) => {
     tempArr.push(room);
     setRoomThunk(tempArr);
-    
-    
   };
 
   const onRemoveSelected = useCallback(() => {
@@ -305,7 +295,6 @@ const GridExample = ({
 
   function onEditableSelected() {
     const selectedData = gridRef.current.api.getSelectedRows();
-    // setSelectedRoomThunk(selectedData[0]);
     if (selectedData[0] !== undefined) {
       setModalEditActive(true);
       return selectedData[0];
@@ -314,29 +303,11 @@ const GridExample = ({
     }
   }
 
-  // const OpenChar = () => {
-  //   const selectedData = gridRef.current.api.getSelectedRows();
-  //   if (selectedData[0] !== undefined) {
-  //     setModalChar(true);
-  //     return selectedData[0];
-  //   } else {
-  //     alert("Выберите студента");
-  //   }
-  // };
-
   const OnAddStudents = () => {
     setModalAdd(true);
   };
 
-  // const autosizeColumn = (params) => {
-  //   params.api.autoSizeAllColumns();
-  // };
-
- 
-  
-
-  const loadingCellRenderer = useCallback(<Loader/>);
-
+  const loadingCellRenderer = useCallback(<Loader />);
 
   const localeText = useMemo(() => {
     return {
@@ -372,14 +343,22 @@ const GridExample = ({
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
       <div style={{ height: "1000px" }}>
-        <button className="btn-control" onClick={onRemoveSelected}>Удалить студента</button>
-        <button className="btn-control" onClick={onEditableSelected}>Изменить студента</button>
+        <button className="btn-control" onClick={onRemoveSelected}>
+          Удалить студента
+        </button>
+        <button className="btn-control" onClick={onEditableSelected}>
+          Изменить студента
+        </button>
         <button className="btn-control" type="button" onClick={OnAddStudents}>
           Добавить студента
         </button>
 
-        <NavLink to="/char" className="btn-control">Характеристика</NavLink>
-        <NavLink to="/population" className="btn-control">Кол-во свободных комнат</NavLink>
+        <NavLink to="/char" className="btn-control">
+          Характеристика
+        </NavLink>
+        <NavLink to="/population" className="btn-control">
+          Кол-во свободных комнат
+        </NavLink>
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             ref={gridRef}
@@ -395,12 +374,9 @@ const GridExample = ({
             columnTypes={columnTypes}
             onGridReady={onGridReady(rooms)}
             rowSelection="single"
-            // autosizeColumn={autosizeColumn}
-            gridOptions = {gridOptions}
+            gridOptions={gridOptions}
             loadingCellRenderer={loadingCellRenderer}
           />
-          
-        
         </div>
       </div>
     </div>
@@ -410,7 +386,6 @@ const GridExample = ({
 let mapStateToProps = (state) => {
   return {
     rooms: state.mainPage.rooms,
-    // students: state.mainPage.students,
   };
 };
 
@@ -419,17 +394,4 @@ export default connect(mapStateToProps, {
   setRoomThunk,
   deleteRoomsThunk,
   setSelectedRoomThunk,
-  // getStudentsThunk,
 })(GridExample);
-
-// fetch("http://192.168.11.57:18076/api/hostels/1/rooms", {
-//   headers: {
-//     Authorization:
-//       "Bearer " + JSON.parse(localStorage.getItem("user"))["access_token"],
-//   },
-// })
-// .then((resp) => resp.json())
-// .then((data) => {
-//   setRowData(data);
-
-

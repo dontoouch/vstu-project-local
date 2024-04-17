@@ -191,11 +191,9 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
 let mapStateToProps = (state) => {
   return {
     rooms: state.mainPage.rooms,
-    // students: state.mainPage.students,
   };
 };
 
 export default connect(mapStateToProps, {
   addStudentThunk,
-  // getStudentsThunk,
 })(AddingStudents);
