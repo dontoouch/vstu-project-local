@@ -130,7 +130,9 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
         className={active ? "modal__content-adding active" : "modal__content-adding"}
         onClick={(e) => e.stopPropagation()}
       >
+        
         <div className="select">
+          <btn className="close" onClick={() => setActive(false)}></btn>
           <div className="select-block">
             <h3>ФИО</h3>
             <Select

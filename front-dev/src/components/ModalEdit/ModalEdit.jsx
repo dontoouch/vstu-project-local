@@ -44,6 +44,7 @@ const overWriteData = () => {
           className={active ? "modal__content active" : "modal__content"}
           onClick={(e) => e.stopPropagation()}
         >
+          <btn className="close" onClick={() => setActive(false)}></btn>
           <h3>Изменение студента</h3>
           <div className="modal-btn">
             <button className="btn-control" onClick={getSelectedRow} type="button" formtarget="blank">
