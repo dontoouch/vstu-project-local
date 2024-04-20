@@ -14,15 +14,15 @@ const mainReducer = (state = initialState, action) => {
       };
 
       case SET_ROOM:
-      console.log(action)
+      // console.log(action)
       return {
         ...state,
         rooms: [...action.rooms],
       };
 
       case ADD_STUDENT:
-        console.log(state)
-        console.log(action)
+        // console.log(state)
+        // console.log(action)
       return {
         ...state,
         rooms: [...state.rooms, ...action.rooms],

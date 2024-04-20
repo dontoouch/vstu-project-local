@@ -55,7 +55,7 @@
   }
 
   .gridTable {
-    width: 60%;
+    /* width: 60%; */
   }
 
   main {
@@ -80,5 +80,15 @@
   .sidebarBlock {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
+  }
+
+  .sidebarItem {
+    border-top: 1px #babfc7 solid;
+    /* border-bottom: 1px #babfc7 solid; */
+    padding: 12px 15px;
+  }
+
+  .sidebarItem:last-child {
+    border-bottom: 1px #babfc7 solid;
   }

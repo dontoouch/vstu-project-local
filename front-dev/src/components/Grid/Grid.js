@@ -41,10 +41,10 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
       hide: true,
       valueGetter: (params) => {
         if (params.data.hostel === "HOSTEL_2") {
-          return "Общежитие №2";
+          return "№2";
         }
         if (params.data.hostel === "HOSTEL_3") {
-          return "Общежитие №3";
+          return "№3";
         }
         return "unknown";
       },
@@ -83,6 +83,7 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
       field: "roomNumber",
       type: "numberColumn",
       editable: false,
+
     },
 
     {
@@ -114,6 +115,104 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
       cellEditorParams: {
         values: ["М", "Б"],
       },
+    },
+    {
+      headerName: "Ин.студент",
+      valueGetter: (params) => {
+        return params.data?.students?.foreignStudent === true ? "Да" : params.data?.students?.foreignStudent === false ? "Нет" : "";
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
+    },
+    {
+      headerName: "Форма обучения",
+      valueGetter: (params) => {
+        return params.data?.students?.formEducation ;
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
+    },
+    {
+      headerName: "Курс",
+      valueGetter: (params) => {
+        return params?.data?.students?.group?.currentCourse;
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
+    },
+    {
+      headerName: "Группа",
+      valueGetter: (params) => {
+        return params?.data?.students?.group?.name;
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
+    },
+    {
+      headerName: "Пол",
+      valueGetter: (params) => {
+        return params?.data?.students?.sex === 0 ? "Ж" : params?.data?.students?.sex === 1 ? "М" : "";
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
+    },
+    {
+      headerName: "№ факультета",
+      valueGetter: (params) => {
+        return params?.data?.students?.group?.facultyId
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
+    },
+    {
+      headerName: "ДР",
+      valueGetter: (params) => {
+        return params?.data?.students?.birthDate
+      },
+      // valueSetter: (params) => {
+      //   params.data.roomType = params.newValue;
+      //   return true;
+      // },
+      // cellEditor: "agSelectCellEditor",
+      // cellEditorParams: {
+      //   values: ["М", "Б"],
+      // },
     },
     {
       headerName: "Подтвержденный",
@@ -183,6 +282,7 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
     // editable: () => JSON.parse(localStorage.user).email === "admin@gmail.com" ? true : false,
   ]);
 
+
   function onCellValueChanged(event) {
     console.log(
       "onCellValueChanged: " + event.colDef.field + " = " + event.newValue
@@ -230,11 +330,15 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
     };
   }, []);
 
+
   const gridOptions = {
-    onGridReady: (event) => event.api.sizeColumnsToFit(),
+    onGridReady: (event) => {
+      event.api.sizeColumnsToFit();
+    },
     isGroupOpenByDefault: (params) => {
       return params.field === "hostel";
     },
+    
   };
 
   const onGridReady = useCallback(
@@ -335,30 +439,33 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk }) => {
   }, []);
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} >
       <ModalEdit
         active={modalEditActive}
         setActive={setModalEditActive}
         data={onEditableSelected}
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
-      <div style={{ height: "1000px" }}>
-        <button className="btn-control" onClick={onRemoveSelected}>
-          Удалить студента
-        </button>
-        <button className="btn-control" onClick={onEditableSelected}>
-          Изменить студента
-        </button>
-        <button className="btn-control" type="button" onClick={OnAddStudents}>
-          Добавить студента
-        </button>
+      <div className="containerGrid">
+        <div className="btn-contol-block">
+          <button className="btn-control" onClick={onRemoveSelected}>
+            Удалить студента
+          </button>
+          <button className="btn-control" onClick={onEditableSelected}>
+            Изменить студента
+          </button>
+          <button className="btn-control" type="button" onClick={OnAddStudents}>
+            Добавить студента
+          </button>
 
-        <NavLink to="/char" className="btn-control">
-          Характеристика
-        </NavLink>
-        <NavLink to="/population" className="btn-control">
-          Кол-во свободных комнат
-        </NavLink>
+          <NavLink to="/char" className="btn-control">
+            Характеристика
+          </NavLink>
+          <NavLink to="/population" className="btn-control">
+            Кол-во свободных комнат
+          </NavLink>
+        </div>
+
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             ref={gridRef}

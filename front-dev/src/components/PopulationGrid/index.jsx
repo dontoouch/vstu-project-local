@@ -110,8 +110,15 @@ const PopulationGrid = ({
         onRowClicked: event => {
           console.log(event.data);
           setSelectedRoomThunk([event.data]);
-        }
+        },
+        // onGridReady: (event) => event.api.sizeColumnsToFit(),
     }
+
+    // const onGridReady = useCallback( 
+    //   (event) => {          
+    //     event.api.sizeColumnsToFit()  
+    //   },[]
+    // );
 
 
   return (
