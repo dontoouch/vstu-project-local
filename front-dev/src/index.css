@@ -14,6 +14,7 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
@@ -24,6 +25,7 @@ code {
 .btn-control {
   max-width: 180px;
   width: 100%;
+  height: auto;
   background-color: #374b7d;
   padding: 12px 12px;
   margin: 10px 15px;
@@ -35,9 +37,29 @@ code {
   line-height: 19px;
   cursor: pointer;
   text-decoration-line: none;
+  text-align: center;
   transition: 0.3s ease-out;
 }
 
 .btn-control:hover {
   background-color: #434c63;
+}
+
+.containerGrid {
+  position: relative;
+  height: 1000px;
+}
+
+.btn-contol-block {
+  position: sticky;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index:1;
+  background-color: inherit;
+  /* border-bottom: 1px #434c63 solid; */
 }
