@@ -9,11 +9,13 @@ import { NavLink } from "react-router-dom";
 // } from "../../redux/actions/mainThunks";
 // import { connect } from "react-redux";
 import Select from "react-select";
+import PunishmentsGrid from "../GridPunishments/PunishmentsGrid";
 
 const Characteristic = ({ rooms, getRoomsThunk }) => {
   const [parseRoomsData, setParseRoomsData] = useState([]);
   const [roomsData, setRoomsData] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
+  const [neighbors, setNeighbors] = useState([]);
 
   useEffect(() => {
     // getRoomsThunk();
@@ -83,6 +85,7 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
 
   const setRoom = (newValue) => {
     setCurrentRoom(newValue.value);
+    console.log(newValue.value);
     getSelectedStudents();
   };
 
@@ -92,19 +95,34 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
         `${item.students.name} ${item.students.patronymic} ${item.students.surname}` ===
         currentName
     );
+    console.log(selectedRow);
 
     if (selectedRow !== undefined) {
       setSelectedStudents(selectedRow);
-      console.log(selectedRow);
     }
   };
 
+  // const getNeighbors =
+  //   parseRoomsData !== undefined
+  //     ? parseRoomsData.map((item) => {
+  //         if (
+  //           item.roomNumber === selectedStudents.roomNumber &&
+  //            selectedStudents.students.id !== item.students.id
+  //         ) {
+            
+  //          setNeighbors([...neighbors, item]);
+  //         }
+  //       })
+  //     :  0;
+  
   return (
     <div className="container">
       <div className="header-char">
         <h3>Характеристика</h3>
         <div className="select-char">
-          <NavLink to="/main" className="btn-back">Назад</NavLink>
+          <NavLink to="/main" className="btn-back">
+            Назад
+          </NavLink>
           <Select
             className="select-content"
             options={optionsName}
@@ -126,7 +144,6 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
                 : ""
             }
           />
-
         </div>
       </div>
       <div className="main__wrap">
@@ -138,8 +155,10 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
             <p className="char__title">{currentName}</p>
             <p className="char__text">
               {selectedStudents.students !== undefined
-                ? selectedStudents.students.lastDocument ? selectedStudents.students.lastDocument.birthDate
-                : "Нет данных": "Нет данных"}
+                ? selectedStudents.students.lastDocument
+                  ? selectedStudents.students.lastDocument.birthDate
+                  : "Нет данных"
+                : "Нет данных"}
             </p>
             <p className="char__text">
               {selectedStudents.students !== undefined
@@ -152,8 +171,7 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
                 {selectedStudents.students !== undefined
                   ? selectedStudents.students.group !== undefined
                     ? selectedStudents.students.group.spec !== undefined
-                      ? selectedStudents.students.group.spec
-                          .name
+                      ? selectedStudents.students.group.spec.name
                       : "Нет данных"
                     : "Нет данных"
                   : "Нет данных"}
@@ -200,26 +218,34 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
               <div className="char__wrap">
                 <div className="char__wrap-parents">
                   <p className="char__text">
-                    {selectedStudents.students !== undefined ? selectedStudents.students.lastDocument
-                      ? selectedStudents.students.lastDocument.fatherFullName
-                      : "Нет данных": "Нет данных"}
+                    {selectedStudents.students !== undefined
+                      ? selectedStudents.students.lastDocument
+                        ? selectedStudents.students.lastDocument.fatherFullName
+                        : "Нет данных"
+                      : "Нет данных"}
                   </p>
                   <p className="char__text">
-                    {selectedStudents.students !== undefined ? selectedStudents.students.lastDocument
-                      ? selectedStudents.students.lastDocument.fatherPhone
-                      : "Нет данных": "Нет данных"}
+                    {selectedStudents.students !== undefined
+                      ? selectedStudents.students.lastDocument
+                        ? selectedStudents.students.lastDocument.fatherPhone
+                        : "Нет данных"
+                      : "Нет данных"}
                   </p>
                 </div>
                 <div className="char__wrap-parents">
                   <p className="char__text">
-                    {selectedStudents.students !== undefined ? selectedStudents.students.lastDocument
-                      ? selectedStudents.students.lastDocument.motherFullName
-                      : "Нет данных": "Нет данных"}{" "}
+                    {selectedStudents.students !== undefined
+                      ? selectedStudents.students.lastDocument
+                        ? selectedStudents.students.lastDocument.motherFullName
+                        : "Нет данных"
+                      : "Нет данных"}{" "}
                   </p>
                   <p className="char__text">
-                    {selectedStudents.students !== undefined ? selectedStudents.students.lastDocument
-                      ? selectedStudents.students.lastDocument.motherPhone
-                      : "Нет данных": "Нет данных"}
+                    {selectedStudents.students !== undefined
+                      ? selectedStudents.students.lastDocument
+                        ? selectedStudents.students.lastDocument.motherPhone
+                        : "Нет данных"
+                      : "Нет данных"}
                   </p>
                 </div>
               </div>
@@ -260,28 +286,20 @@ const Characteristic = ({ rooms, getRoomsThunk }) => {
               <p className="char__title">Общ.занятость</p>
 
               <p className="char__title">Соседи</p>
-              <div>
+               <div>
                 <div className="char__wrap-parents">
-                  <p className="char__text">1- </p>
+                  <p className="char__text">имя</p>
                   <p className="char__text">+34888454</p>
                 </div>
-                <div className="char__wrap-parents">
-                  <p className="char__text">2- </p>
-                  <p className="char__text">+34888454</p>
-                </div>
-                <div className="char__wrap-parents">
-                  <p className="char__text">3- </p>
-                  <p className="char__text">+34888454</p>
-                </div>
-                <div className="char__wrap-parents">
-                  <p className="char__text">4- </p>
-                  <p className="char__text">+34888454</p>
-                </div>
-                <p className="char__title">Взыскания</p>
-              </div>
+              </div> 
+              
             </div>
           </div>
         </div>
+        <p className="char__title">Взыскания</p>
+        {currentName && currentRoom && (
+          <PunishmentsGrid props={selectedStudents} />
+        )}
       </div>
     </div>
   );
