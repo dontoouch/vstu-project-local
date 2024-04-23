@@ -1,30 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  getRoomsThunk,
+  setRoomThunk,
+  deleteRoomsThunk,
+  setSelectedRoomThunk,
+} from "../../redux/actions/mainThunks";
+import { connect } from "react-redux";
 import "./modal.css";
 
-const ModalEdit = ({ active, setActive, data }) => {
-  const [activeBtn, setActiveBtn] = useState(false);
-  let [inputValue, setInputValue] = useState("");
-  let [dataRow, setDataRow] = useState();
+const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomThunk, }) => {
+  let [roomInput, setRoomInput] = useState();
+  let [roomType, setRoomType] = useState();
+  let [day, setDay] = useState();
+  let [selected, setSelected] = useState();
 
-  const getSelectedRow = () => {
-    setActiveBtn(true);
-    const selectedRow = data();
-    console.log(selectedRow);
-    if (selectedRow !== undefined) {
-      setDataRow(selectedRow);
-      setInputValue(selectedRow);
-    } else {
-      alert("Студент не выбран");
-    }
+  useEffect(() => {
+    setSelected(selectedRoom[0]);
+    setRoomInput(selectedRoom[0]?.roomNumber);
+  }, [selectedRoom]);
+
+  const onPost = () => {
+    let prevStateRoom = selectedRoom[0].roomNumber;
+    let prevStateType = selectedRoom[0].roomType;
+    let currentRoom = roomInput
+    let currentType = roomType
+    // TODO currentType null
+    rooms.forEach(item => {
+      if(item.roomNumber === prevStateRoom && item.roomType === prevStateType){
+        fetch(
+          `http://localhost:3001/room/${item.id}/?roomNumber=${currentRoom} && roomType=${currentType}`,
+          //TODO
+          {
+            method: "POST",
+            headers: {
+              Authorization:
+                "Bearer" + JSON.parse(localStorage.getItem("user"))["access_token"],
+            },
+            
+          }
+        ).then((response) => response.json());
+      }
+    });
+    setActive(false);
+    // setSelectedRoomThunk([])
   };
 
-  const overWriteData = () => {
-    setDataRow((currentData) => ({
-      ...currentData,
-      roomNumber: Number(inputValue.roomNumber) || Number(inputValue),
-    }));
-    console.log(dataRow);
-  };
 
   return (
     <div
@@ -36,21 +56,14 @@ const ModalEdit = ({ active, setActive, data }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <btn className="close" onClick={() => setActive(false)}></btn>
-        <h3 style={{fontWeight: "bold"}}>Изменение студента</h3>
+        <h3 style={{ fontWeight: "bold" }}>Изменение студента</h3>
         <div className="modal-btn">
-          <button
-            className="btn-control"
-            onClick={getSelectedRow}
-            type="button"
-            formtarget="blank"
-          >
-            Получить данные
-          </button>
+
           <button
             className="btn-control"
             type="button"
             formtarget="blank"
-            onClick={overWriteData}
+            onClick={onPost}
           >
             Отправить
           </button>
@@ -63,7 +76,7 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="npp"
               id="npp"
-              value={activeBtn ? inputValue.students.surname : "Нет данных"}
+              value={selected?.npp ? selected?.npp : "Нет данных"}
             />
           </div>
           <div className="form__input-wrap">
@@ -73,7 +86,11 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="День рождения"
               id="День рождения"
-              // value={activeBtn ? inputValue.students.surname : "Нет данных"}
+              value={
+                selected?.students?.birthDay
+                  ? selected?.students?.birthDay
+                  : "Нет данных"
+              }
             />
           </div>
           <div className="form__input-wrap">
@@ -84,11 +101,7 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Пол"
               id="Пол"
               value={
-                activeBtn
-                  ? inputValue.students.sex === 0
-                    ? "Женский"
-                    : "Мужской"
-                  : "Нет данных"
+                 selected?.students?.sex === 0 ? "Женский" : selected?.students.sex === 1 ? "Мужской" : "Нет данных" 
               }
             />
           </div>
@@ -100,10 +113,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Фамилия"
               id="Фамилия"
               value={
-                activeBtn
-                  ? inputValue.students.surname
-                    ? inputValue.students.surname
-                    : "Нет данных"
+                selected?.students?.surname
+                  ? selected?.students?.surname
                   : "Нет данных"
               }
             />
@@ -116,10 +127,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Имя"
               id="Имя"
               value={
-                activeBtn
-                  ? inputValue.students.name
-                    ? inputValue.students.name
-                    : "Нет данных"
+                selected?.students?.name
+                  ? selected?.students?.name
                   : "Нет данных"
               }
             />
@@ -132,10 +141,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Отчество"
               id="Отчество"
               value={
-                activeBtn
-                  ? inputValue.students.patronymic
-                    ? inputValue.students.patronymic
-                    : "Нет данных"
+                selected?.students?.patronymic
+                  ? selected?.students?.patronymic
                   : "Нет данных"
               }
             />
@@ -149,10 +156,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Курс"
               id="Курс"
               value={
-                activeBtn
-                  ? inputValue.students.group.currentCourse
-                    ? inputValue.students.group.currentCourse
-                    : "Нет данных"
+                selected?.students?.group?.currentCourse
+                  ? selected?.students?.group?.currentCourse
                   : "Нет данных"
               }
             />
@@ -165,10 +170,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Факультет"
               id="Факультет"
               value={
-                activeBtn
-                  ? inputValue.students.specialization.name
-                    ? inputValue.students.specialization.name
-                    : "Нет данных"
+                selected?.students?.specialization?.name
+                  ? selected?.students?.specialization?.name
                   : "Нет данных"
               }
             />
@@ -181,10 +184,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Группа"
               id="Группа"
               value={
-                activeBtn
-                  ? inputValue.students.group.name
-                    ? inputValue.students.group.name
-                    : "Нет данных"
+                selected?.students?.group?.name
+                  ? selected?.students?.group?.name
                   : "Нет данных"
               }
             />
@@ -196,7 +197,11 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="Ин.студент"
               id="Ин.студент"
-              // value={activeBtn ? inputValue.students.surname : "Нет данных"}
+              value={
+                selected?.students?.foreign
+                  ? selected?.students?.foreign
+                  : "Нет данных"
+              }
             />
           </div>
           <div className="form__input-wrap">
@@ -206,7 +211,11 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="бюджет/внебюджет"
               id="Форма обучения"
-              // value={activeBtn ? inputValue.students.surname : "Нет данных"}
+              value={
+                selected?.students?.formEducation
+                  ? selected?.students?.formEducation
+                  : "Нет данных"
+              }
             />
           </div>
           <div className="form__input-wrap">
@@ -216,14 +225,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="№ комнаты"
               id="№ комнаты"
-              value={
-                activeBtn
-                  ? inputValue.roomNumber
-                    ? inputValue.roomNumber
-                    : "Нет данных"
-                  : "Нет данных"
-              }
-              onChange={(e) => setInputValue(e.target.value)}
+              value={roomInput}
+              onChange={(e) => setRoomInput(e.target.value)}
             />
           </div>
 
@@ -234,8 +237,9 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="дни"
               id="дни"
-              // value={activeBtn ? inputValue.roomNumber   : 'Нет данных' }
-              // onChange={(e)=> setInputValue(e.target.value)}
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
+              // TODO
             />
           </div>
           <div className="form__input-wrap">
@@ -246,12 +250,8 @@ const ModalEdit = ({ active, setActive, data }) => {
               placeholder="Статус обучения"
               id="Статус обучения"
               value={
-                activeBtn
-                  ? inputValue.students.group.spec.status
-                    ? inputValue.students.group.spec.status === "ACTIVE"
-                      ? "Активен"
-                      : "Не активен"
-                    : "Нет данных"
+                selected?.students?.group?.spec?.status
+                  ? selected?.students?.group?.spec?.status
                   : "Нет данных"
               }
             />
@@ -263,52 +263,52 @@ const ModalEdit = ({ active, setActive, data }) => {
               type="text"
               placeholder="Период обучения"
               id="Период обучения"
-              value={
-                activeBtn
-                  ? `${
-                      inputValue.students.group.yearStart
-                        ? inputValue.students.group.yearStart
-                        : "Нет данных"
-                    }-${
-                      inputValue.students.group.yearEnd
-                        ? inputValue.students.group.yearEnd
-                        : "Нет данных"
-                    }`
+              value={`${
+                selected?.students?.group?.yearStart
+                  ? selected?.students?.group?.yearStart
                   : "Нет данных"
-              }
+              }-${
+                selected?.students?.group?.yearEnd
+                  ? selected?.students?.group?.yearEnd
+                  : "Нет данных"
+              }`}
             />
           </div>
-          {/* <div className="form__input-wrap">
-              <label for="Номер договора">Номер договора</label>
-              <input
-                className="form__input"
-                type="text"
-                placeholder="Номер договора"
-                id="Номер договора"
-                // value={activeBtn ? inputValue.roomNumber   : 'Нет данных' }
-                // onChange={(e)=> setInputValue(e.target.value)}
-              />
-            </div> */}
         </form>
         <div className="additional-info">
           <h4>
-            <span style={{fontWeight: "bold", color: "#333333"}}>Домашний адрес: </span>
-            {activeBtn
-              ? `${inputValue.students.addressState} область, ${inputValue.students.addressRegion} район, г. ${inputValue.students.addressCity} `
+            <span style={{ fontWeight: "bold", color: "#333333" }}>
+              Домашний адрес:{" "}
+            </span>
+            {selected?.students?.addressState &&
+            selected?.students?.addressRegion &&
+            selected?.students?.addressCity
+              ? `${selected?.students?.addressState} область, ${selected?.students?.addressRegion} район, г. ${selected?.students?.addressCity} `
               : "Нет данных"}
           </h4>
           <h4>
-            <span style={{fontWeight: "bold", color: "#333333"}}>Телефон: </span>
-            {activeBtn
-              ? `${inputValue.students.phone} `
+            <span style={{ fontWeight: "bold", color: "#333333" }}>
+              Телефон:{" "}
+            </span>
+            {selected?.students?.phone
+              ? selected?.students?.phone
               : "Нет данных"}
           </h4>
         </div>
-
-        
       </div>
     </div>
   );
 };
+let mapStateToProps = (state) => {
+  return {
+    selectedRoom: state.additional.selectedRoom,
+    rooms: state.mainPage.rooms,
+  };
+};
 
-export default ModalEdit;
+export default connect(mapStateToProps, {
+  getRoomsThunk,
+  setRoomThunk,
+  deleteRoomsThunk,
+  setSelectedRoomThunk,
+})(ModalEdit);
