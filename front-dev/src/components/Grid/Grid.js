@@ -216,7 +216,7 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
     },
     {
       headerName: "Подтвержденный",
-      field: "students.approved",
+      field: "approved",
       valueGetter: (params) => {
         if (params.data === undefined) {
           return "";
@@ -284,13 +284,15 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
 
 
   function onCellValueChanged(event) {
+    let currentPath = event.colDef.field
+    console.log(event.data.students.currentPath)
     console.log(
       "onCellValueChanged: " + event.colDef.field + " = " + event.newValue
     );
     fetch(
       `http://192.168.11.57:18076/api/students/${
         event.data.students.id
-      }/?approved=${event.data.students.approved === "Да" ? true : false}`,
+      }/?${currentPath}=${event.newValue === "Да" ? true : false}`,
       {
         method: "POST",
         headers: {
@@ -405,7 +407,6 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
     const selectedData = gridRef.current.api.getSelectedRows();
     if (selectedData[0] !== undefined) {
       setModalEditActive(true);
-      return selectedData[0];
     } else {
       alert("Выберите студента");
     }
@@ -447,7 +448,6 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
       <ModalEdit
         active={modalEditActive}
         setActive={setModalEditActive}
-        data={onEditableSelected}
       />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
       <div className="containerGrid">
@@ -465,7 +465,7 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
           <NavLink to="/char" className="btn-control">
             Характеристика
           </NavLink>
-          <NavLink to="/population" className="btn-control">
+          <NavLink to="/population" className="btn-control" onClick={() => setSelectedRoomThunk([])}>
             Кол-во свободных комнат
           </NavLink>
         </div>

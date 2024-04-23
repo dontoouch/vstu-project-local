@@ -6,12 +6,13 @@ import {
   getRoomsThunk,
   setRoomThunk,
   deleteRoomsThunk,
+  setSelectedRoomThunk
 } from "../../redux/actions/mainThunks";
 import { connect } from "react-redux";
 import Select from "react-select";
 import PunishmentsGrid from "../GridPunishments/PunishmentsGrid";
 
-const Characteristic = ({ selectedRoom, rooms }) => {
+const Characteristic = ({ selectedRoom, rooms, setSelectedRoomThunk }) => {
   // const [neighbors, setNeighbors] = useState([]);
   const [selected, setSelected] = useState([]);
   const [roomsData, setRoomsData] = useState([]);
@@ -26,7 +27,7 @@ const Characteristic = ({ selectedRoom, rooms }) => {
       <div className="header-char">
         <h3>Характеристика</h3>
         <div className="select-char">
-          <NavLink to="/main" className="btn-back">
+          <NavLink to="/main" className="btn-back" >
             Назад
           </NavLink>
         </div>
@@ -198,4 +199,4 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {})(Characteristic);
+export default connect(mapStateToProps, {setSelectedRoomThunk})(Characteristic);
