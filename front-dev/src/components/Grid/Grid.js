@@ -20,8 +20,16 @@ import ModalEdit from "../ModalEdit/ModalEdit";
 import AddingStudents from "../AddingStudents";
 import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
+import adminDefs from "./roleDefs/AdminDefs";
+import curatorDefs from "./roleDefs/CuratorDefs";
+import { roles } from "./roles";
 
-const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }) => {
+const GridExample = ({
+  rooms,
+  getRoomsThunk,
+  setRoomThunk,
+  setSelectedRoomThunk,
+}) => {
   const gridRef = useRef();
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
@@ -32,260 +40,9 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
     getRoomsThunk();
   }, []);
 
-  const [columnDefs, setColumnDefs] = useState([
-    {
-      headerName: "Номер общежития",
-      field: "hostel",
-      editable: false,
-      rowGroup: true,
-      hide: true,
-      valueGetter: (params) => {
-        if (params.data.hostel === "HOSTEL_2") {
-          return "№2";
-        }
-        if (params.data.hostel === "HOSTEL_3") {
-          return "№3";
-        }
-        return "unknown";
-      },
-    },
-    { headerName: "Этаж", field: "floor", editable: false },
-    {
-      headerName: "ФИО",
-
-      valueGetter: (params) => {
-        if (params.data === undefined) {
-          return "";
-        }
-        return params.data.students !== undefined
-          ? `${params.data.students.surname} ${params.data.students.name} ${params.data.students.patronymic}`
-          : "Нет данных";
-      },
-      cellEditor: "agSelectCellEditor",
-
-      cellEditorParams: {
-        values: rooms.map((item) =>
-          item.students !== undefined
-            ? `${item.students.surname} ${item.students.name} ${item.students.patronymic}`
-            : "Нет данных"
-        ),
-      },
-      valueSetter: (params) => {
-        params.data.name = params.newValue;
-        params.data.surname = params.newValue;
-        params.data.patronymic = params.newValue;
-        return true;
-      },
-    },
-
-    {
-      headerName: "№ комнаты",
-      field: "roomNumber",
-      type: "numberColumn",
-      editable: false,
-
-    },
-
-    {
-      headerName: "Тип комнаты",
-      field: "roomType",
-      valueGetter: (params) => {
-        if (params.data === undefined) {
-          return "";
-        }
-        if (params.data.roomType === "LITTLE") {
-          return "М";
-        }
-        if (params.data.roomType === "BIG") {
-          return "Б";
-        }
-        if (params.data.roomType === "Б") {
-          return "Б";
-        }
-        if (params.data.roomType === "М") {
-          return "М";
-        }
-        return "unknown";
-      },
-      valueSetter: (params) => {
-        params.data.roomType = params.newValue;
-        return true;
-      },
-      cellEditor: "agSelectCellEditor",
-      cellEditorParams: {
-        values: ["М", "Б"],
-      },
-    },
-    {
-      headerName: "Ин.студент",
-      valueGetter: (params) => {
-        return params.data?.students?.foreignStudent === true ? "Да" : params.data?.students?.foreignStudent === false ? "Нет" : "";
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "Форма обучения",
-      valueGetter: (params) => {
-        return params.data?.students?.formEducation ;
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "Курс",
-      valueGetter: (params) => {
-        return params?.data?.students?.group?.currentCourse;
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "Группа",
-      valueGetter: (params) => {
-        return params?.data?.students?.group?.name;
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "Пол",
-      valueGetter: (params) => {
-        return params?.data?.students?.sex === 0 ? "Ж" : params?.data?.students?.sex === 1 ? "М" : "";
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "№ факультета",
-      valueGetter: (params) => {
-        return params?.data?.students?.group?.facultyId
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "ДР",
-      valueGetter: (params) => {
-        return params?.data?.students?.birthDate
-      },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
-    },
-    {
-      headerName: "Подтвержденный",
-      field: "approved",
-      valueGetter: (params) => {
-        if (params.data === undefined) {
-          return "";
-        }
-        if (params.data.students.approved === true) {
-          return "Да";
-        }
-        if (params.data.students.approved === false) {
-          return "Нет";
-        }
-        if (params.data.students.approved === "Да") {
-          return "Да";
-        }
-        if (params.data.students.approved === "Нет") {
-          return "Нет";
-        }
-
-        return "unknown";
-      },
-      valueSetter: (params) => {
-        params.data.students.approved = params.newValue;
-        return true;
-      },
-      type: "booleanColumn",
-      cellEditor: "agSelectCellEditor",
-      cellEditorParams: {
-        values: ["Да", "Нет"],
-      },
-    },
-    {
-      headerName: "Действующая комната",
-      field: "status",
-      valueGetter: (params) => {
-        if (params.data === undefined) {
-          return "";
-        }
-        if (params.data.status === "ACTIVE") {
-          return "Да";
-        }
-        if (params.data.status === "DELETED") {
-          return "Нет";
-        }
-        if (params.data.status === "Да") {
-          return "Да";
-        }
-        if (params.data.status === "Нет") {
-          return "Нет";
-        }
-
-        return "unknown";
-      },
-      type: "booleanColumn",
-      valueSetter: (params) => {
-        params.data.status = params.newValue;
-        return true;
-      },
-      cellEditor: "agSelectCellEditor",
-      cellEditorParams: {
-        values: ["Да", "Нет"],
-      },
-    },
-
-    // editable: () => JSON.parse(localStorage.user).email === "admin@gmail.com" ? true : false,
-  ]);
-
-
   function onCellValueChanged(event) {
-    let currentPath = event.colDef.field
-    console.log(event.data.students.currentPath)
+    let currentPath = event.colDef.field;
+    console.log(event.data.students.currentPath);
     console.log(
       "onCellValueChanged: " + event.colDef.field + " = " + event.newValue
     );
@@ -332,7 +89,6 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
     };
   }, []);
 
-
   const gridOptions = {
     onGridReady: (event) => {
       event.api.sizeColumnsToFit();
@@ -340,11 +96,15 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
     isGroupOpenByDefault: (params) => {
       return params.field === "hostel";
     },
-    onRowClicked: event => {
+    onRowClicked: (event) => {
       console.log(event);
       setSelectedRoomThunk([event.data]);
     },
-    
+    columnDefs: roles.find((role) => role === "ADMIN")
+      ? adminDefs
+      : roles.find((role) => role === "CURATOR")
+      ? curatorDefs
+      : [],
   };
 
   const onGridReady = useCallback(
@@ -444,11 +204,8 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
   }, []);
 
   return (
-    <div style={containerStyle} >
-      <ModalEdit
-        active={modalEditActive}
-        setActive={setModalEditActive}
-      />
+    <div style={containerStyle}>
+      <ModalEdit active={modalEditActive} setActive={setModalEditActive} />
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
       <div className="containerGrid">
         <div className="btn-contol-block">
@@ -465,7 +222,11 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
           <NavLink to="/char" className="btn-control">
             Характеристика
           </NavLink>
-          <NavLink to="/population" className="btn-control" onClick={() => setSelectedRoomThunk([])}>
+          <NavLink
+            to="/population"
+            className="btn-control"
+            onClick={() => setSelectedRoomThunk([])}
+          >
             Кол-во свободных комнат
           </NavLink>
         </div>
@@ -479,7 +240,7 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
             rowGroupPanelShow={"always"}
             groupDefaultExpanded={0}
             rowData={rooms}
-            columnDefs={columnDefs}
+            // columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             defaultColGroupDef={defaultColGroupDef}
             columnTypes={columnTypes}
