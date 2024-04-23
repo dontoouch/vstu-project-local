@@ -121,98 +121,49 @@ const GridExample = ({ rooms, getRoomsThunk, setRoomThunk,setSelectedRoomThunk }
       valueGetter: (params) => {
         return params.data?.students?.foreignStudent === true ? "Да" : params.data?.students?.foreignStudent === false ? "Нет" : "";
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "Форма обучения",
       valueGetter: (params) => {
         return params.data?.students?.formEducation ;
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "Курс",
       valueGetter: (params) => {
         return params?.data?.students?.group?.currentCourse;
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "Группа",
       valueGetter: (params) => {
         return params?.data?.students?.group?.name;
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "Пол",
       valueGetter: (params) => {
         return params?.data?.students?.sex === 0 ? "Ж" : params?.data?.students?.sex === 1 ? "М" : "";
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "№ факультета",
       valueGetter: (params) => {
         return params?.data?.students?.group?.facultyId
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "ДР",
       valueGetter: (params) => {
         return params?.data?.students?.birthDate
       },
-      // valueSetter: (params) => {
-      //   params.data.roomType = params.newValue;
-      //   return true;
-      // },
-      // cellEditor: "agSelectCellEditor",
-      // cellEditorParams: {
-      //   values: ["М", "Б"],
-      // },
+
     },
     {
       headerName: "Подтвержденный",
