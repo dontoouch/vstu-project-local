@@ -4,11 +4,11 @@ import { NavLink } from "react-router-dom";
 import PopulationGrid from "../PopulationGrid";
 import "./style.css";
 import MaleFemaleBlock from "../MaleFemaleBlock";
-import { getSelectedRoomThunk } from "../../redux/actions/mainThunks";
+import { setSelectedRoomThunk } from "../../redux/actions/mainThunks";
 
 import { connect } from "react-redux";
 
-const Population = ({ selectedRoom, getSelectedRoomThunk }) => {
+const Population = ({ selectedRoom, setSelectedRoomThunk }) => {
   const [popRoom, setPopRoom] = useState(true);
   const [maleFemale, setMaleFemale] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -100,5 +100,5 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  getSelectedRoomThunk,
+  setSelectedRoomThunk,
 })(Population);

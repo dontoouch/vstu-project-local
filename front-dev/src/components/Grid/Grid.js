@@ -22,6 +22,7 @@ import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
 import adminDefs from "./roleDefs/AdminDefs";
 import curatorDefs from "./roleDefs/CuratorDefs";
+import userDefs from "./roleDefs/UserDefs";
 import { roles } from "./roles";
 
 const GridExample = ({
@@ -42,7 +43,6 @@ const GridExample = ({
 
   function onCellValueChanged(event) {
     let currentPath = event.colDef.field;
-    console.log(event.data.students.currentPath);
     console.log(
       "onCellValueChanged: " + event.colDef.field + " = " + event.newValue
     );
@@ -104,7 +104,7 @@ const GridExample = ({
       ? adminDefs
       : roles.find((role) => role === "CURATOR")
       ? curatorDefs
-      : [],
+      : userDefs,
   };
 
   const onGridReady = useCallback(

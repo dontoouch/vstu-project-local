@@ -5,28 +5,46 @@ import {
   deleteRoomsThunk,
   setSelectedRoomThunk,
 } from "../../redux/actions/mainThunks";
+import Select from "react-select";
 import { connect } from "react-redux";
 import "./modal.css";
 
-const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomThunk, }) => {
+const ModalEdit = ({
+  active,
+  setActive,
+  selectedRoom,
+  rooms,
+  setSelectedRoomThunk,
+}) => {
   let [roomInput, setRoomInput] = useState();
   let [roomType, setRoomType] = useState();
   let [day, setDay] = useState();
   let [selected, setSelected] = useState();
+  const [currentName, setCurrentName] = useState();
 
   useEffect(() => {
     setSelected(selectedRoom[0]);
     setRoomInput(selectedRoom[0]?.roomNumber);
   }, [selectedRoom]);
 
+  const optionsName = rooms.map((item) => {
+    return {
+      value: item,
+      label: `${item.students.name} ${item.students.patronymic} ${item.students.surname} ${item.roomNumber} ${item.roomType === "BIG" ? "Б" : "М"}`,
+    };
+  });
+
   const onPost = () => {
     let prevStateRoom = selectedRoom[0].roomNumber;
     let prevStateType = selectedRoom[0].roomType;
-    let currentRoom = roomInput
-    let currentType = roomType
+    let currentRoom = roomInput;
+    let currentType = roomType;
     // TODO currentType null
-    rooms.forEach(item => {
-      if(item.roomNumber === prevStateRoom && item.roomType === prevStateType){
+    rooms.forEach((item) => {
+      if (
+        item.roomNumber === prevStateRoom &&
+        item.roomType === prevStateType
+      ) {
         fetch(
           `http://localhost:3001/room/${item.id}/?roomNumber=${currentRoom} && roomType=${currentType}`,
           //TODO
@@ -34,9 +52,9 @@ const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomTh
             method: "POST",
             headers: {
               Authorization:
-                "Bearer" + JSON.parse(localStorage.getItem("user"))["access_token"],
+                "Bearer" +
+                JSON.parse(localStorage.getItem("user"))["access_token"],
             },
-            
           }
         ).then((response) => response.json());
       }
@@ -45,6 +63,39 @@ const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomTh
     // setSelectedRoomThunk([])
   };
 
+  const onSwap = () => {
+    let tempRoomNumber = selected.roomNumber;
+    let tempRoomType = selected.roomType;
+    console.log(selected)
+    selected.roomNumber = currentName.roomNumber
+    selected.roomType = currentName.roomType
+    setSelectedRoomThunk([selected])
+    //TODO ПРЯМ ХЗ КАК ЭТА ХЕРНЯ БУДЕТ РАБОТАТЬ В РЕАЛЬНОСТИ УЧИТЫВАЯ ТО ЧТО МЫ МЕНЯЕМ ПОЛЯ РАСПАРШЕННЫХ ДАННЫХ А НЕ ИСХОДНЫХ 
+    // НУЖНО СВАПАТЬ СТУДЕНТОВ А НЕ ЦИФРЫ КОМНАТ
+    // НЕСЛОЖНАЯ РЕАЛИЗАЦИЯ === ВПАДЛУ
+    fetch(
+      `http://localhost:3001/room/${selected.id}/?roomNumber=${selected.roomNumber} && roomType=${selected.roomType}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Bearer" +
+            JSON.parse(localStorage.getItem("user"))["access_token"],
+        },
+      }
+    ).then((response) => response.json());
+    fetch(
+      `http://localhost:3001/room/${currentName.id}/?roomNumber=${tempRoomNumber} && roomType=${tempRoomType}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Bearer" +
+            JSON.parse(localStorage.getItem("user"))["access_token"],
+        },
+      }
+    ).then((response) => response.json());
+  };
 
   return (
     <div
@@ -58,7 +109,6 @@ const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomTh
         <btn className="close" onClick={() => setActive(false)}></btn>
         <h3 style={{ fontWeight: "bold" }}>Изменение студента</h3>
         <div className="modal-btn">
-
           <button
             className="btn-control"
             type="button"
@@ -67,6 +117,25 @@ const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomTh
           >
             Отправить
           </button>
+          <div className="selectionBlock">
+            <button
+              className="btn-control"
+              type="button"
+              formtarget="blank"
+              onClick={onSwap}
+            >
+              Поменять местами
+            </button>
+            <Select
+              className="select"
+              options={optionsName}
+              onChange={(newValue) => setCurrentName(newValue.value)}
+              value={
+                currentName
+                  ? optionsName.find((c) => c.value === currentName)
+                  : ""
+              }/>
+          </div>
         </div>
         <form className="form" action="#">
           <div className="form__input-wrap">
@@ -101,7 +170,11 @@ const ModalEdit = ({ active, setActive, selectedRoom , rooms , setSelectedRoomTh
               placeholder="Пол"
               id="Пол"
               value={
-                 selected?.students?.sex === 0 ? "Женский" : selected?.students.sex === 1 ? "Мужской" : "Нет данных" 
+                selected?.students?.sex === 0
+                  ? "Женский"
+                  : selected?.students.sex === 1
+                  ? "Мужской"
+                  : "Нет данных"
               }
             />
           </div>

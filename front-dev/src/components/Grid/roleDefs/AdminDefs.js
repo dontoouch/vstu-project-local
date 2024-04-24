@@ -1,4 +1,3 @@
-
 export const adminDefs = [
   {
     headerName: "Номер общежития",
