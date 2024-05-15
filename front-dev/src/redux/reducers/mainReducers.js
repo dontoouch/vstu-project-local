@@ -1,4 +1,4 @@
-import { SET_ROOMS , SET_ROOM, DELETE_ROOM, ADD_STUDENT } from "../types/mainTypes";
+import { SET_ROOMS , SET_ROOM, DELETE_ROOM, ADD_STUDENT, ADD_PUNISHMENTS, DELETE_PUNISHMENTS } from "../types/mainTypes";
 
 let initialState = {
   rooms: [],
@@ -29,7 +29,23 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         rooms: [...state.rooms, ...action.rooms],
       };
+//-------------------------------------------------
+      case ADD_PUNISHMENTS:
+        // console.log(state)
+        // console.log(action)
+      return {
+        ...state,
+        rooms: [...state.rooms, ...action.rooms],
+      };
 
+      case DELETE_PUNISHMENTS:
+        // console.log(state)
+        // console.log(action)
+      return {
+        ...state,
+        rooms: [...action.rooms],
+      };
+//-------------------------------------------------
       case DELETE_ROOM:
       return {
         ...state,

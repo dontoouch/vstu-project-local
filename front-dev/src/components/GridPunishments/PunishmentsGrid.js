@@ -1,8 +1,8 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useMemo, useRef, useState, useEffect,useCallback  } from "react";
 import {
   getRoomsThunk,
   setRoomThunk,
-  deleteRoomsThunk,
+  deletePunishmentsThunk,
 } from "../../redux/actions/mainThunks";
 
 import { connect } from "react-redux";
@@ -10,16 +10,22 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import ModalEdit from "../ModalEdit/ModalEdit";
+import AddingPunishments from "../AddingPunishments";
 
 const PunishmentsGrid = ({ selectedRoom }) => {
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "183px", width: "100%" }), []);
-
+  const gridRef = useRef();
+  const [modalEditActive, setModalEditActive] = useState(false);
+  const [modalAdd, setModalAdd] = useState(false);
   const [selected, setSelected] = useState([]);
+  console.log(gridRef);
 
   useEffect(() => {
     setSelected(selectedRoom);
   }, [selectedRoom]);
+console.log(selected.students);
 
   const [columnDefs, setColumnDefs] = useState([
     {
@@ -122,11 +128,58 @@ const PunishmentsGrid = ({ selectedRoom }) => {
     };
   }, []);
 
+  const onRemoveSelected = useCallback(() => {
+    const selectedData = gridRef.current.api.getSelectedRows();
+    console.log(selectedData);
+  
+    // eslint-disable-next-line no-restricted-globals
+    let conf = confirm("Вы точно хотите удалить запись?");
+  
+    if (conf) {
+      gridRef.current.api.applyTransaction({
+        remove: selectedData,
+        
+      });console.log(selectedData[0].id);
+      fetch(
+        // `http://192.168.11.57:18076/api/hostels/rooms/${selectedData[0].id}/students?studentId=${selectedData[0].students.id}`,
+        `http://localhost:3001/room/${selectedData[0].id}/students/${selectedData[0].students.id}/order?=${selectedData[0].students.order}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              "Bearer" +
+              JSON.parse(localStorage.getItem("user"))["access_token"],
+          },
+        }
+      ).then((response) => response.json());
+  
+      selectedData[0].students.order = [];
+    }
+  }, []);
+  
+ 
+  
+  const OnAddStudents = () => {
+    setModalAdd(true);
+  };
+ 
+
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine">
+      <ModalEdit active={modalEditActive} setActive={setModalEditActive} />
+      <AddingPunishments active={modalAdd} setActive={setModalAdd} />
+      <div className="btn-contol-block">
+          <button className="btn-control" onClick={onRemoveSelected}>
+            Удалить запись
+          </button>
+        
+          <button className="btn-control" type="button" onClick={OnAddStudents}>
+            Добавить запись
+          </button>
+        </div>
         <AgGridReact
-          // ref={gridRef}
+           ref={gridRef}
           colResizeDefault={"shift"}
           // localeText={localeText}
           groupDisplayType="multiplyColumns"
@@ -154,5 +207,5 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   getRoomsThunk,
   setRoomThunk,
-  deleteRoomsThunk,
+  deletePunishmentsThunk,
 })(PunishmentsGrid);

@@ -1,4 +1,6 @@
-import {SET_ROOMS , SET_ROOM , DELETE_ROOM, ADD_STUDENT, SET_SELECTED_ROOM , GET_SELECTED_ROOM , SET_NEED_HOSTEL } from "../types/mainTypes";
+
+import {SET_ROOMS , SET_ROOM , DELETE_ROOM, ADD_STUDENT, SET_SELECTED_ROOM , GET_SELECTED_ROOM, ADD_PUNISHMENTS, DELETE_PUNISHMENTS } from "../types/mainTypes";
+
 // import {SET_ROOMS, SET_STUDENTS } from "../types/mainTypes";
 export const setRooms = (rooms) => ({
   type: SET_ROOMS,
@@ -29,7 +31,17 @@ export const addStudent = (roomStudent) => ({
   type: ADD_STUDENT,
   rooms: roomStudent,
 });
+//-------------------------------------------------
+export const addPunishments = (roomStudent)=>({
+  type: ADD_PUNISHMENTS,
+  rooms:roomStudent,
+})
 
+export const deletePunishments = (roomStudent)=>({
+  type: DELETE_PUNISHMENTS,
+  rooms:roomStudent,
+})
+//-------------------------------------------------
 export const deleteRooms = (rooms) => ({
   type: DELETE_ROOM,
   rooms: rooms,
