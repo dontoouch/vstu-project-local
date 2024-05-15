@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-export const CuratorDefs = [
+export const curatorDefs = [
   {
     headerName: "Номер общежития",
     field: "hostel",
@@ -135,4 +133,4 @@ export const CuratorDefs = [
   },
 ];
 
-export default CuratorDefs;
+export default curatorDefs;

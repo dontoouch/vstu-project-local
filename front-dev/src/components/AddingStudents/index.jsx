@@ -4,11 +4,12 @@ import Select from "react-select";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { addStudentThunk } from "../../redux/actions/mainThunks";
+import { addStudentThunk, getNeedHostelThunk } from "../../redux/actions/mainThunks";
 import { connect } from "react-redux";
 
 
-const AddingStudents = ({ active, setActive , addStudentThunk}) => {
+const AddingStudents = ({ active, setActive , addStudentThunk , getNeedHostelThunk
+, needHostel}) => {
 
 
   const [dataState, setDataState] = useState([]);
@@ -34,6 +35,7 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
     })
       .then((resp) => resp.json())
       .then((data) => setDataState(data));
+    // getNeedHostelThunk()
   }, []);
 
   const [currentName, setCurrentName] = useState("");
@@ -69,7 +71,7 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
   ];
 
   
-  const onPostData = async (roomsData, dataState) => {
+  const onPostData = async () => {
     try {
       const foundRoom = roomsData.find(
         (item) => item.roomNumber === currentRoom
@@ -176,7 +178,7 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
             <button
               className="btn-approved"
               type="button"
-              onClick={() => onPostData(roomsData, dataState)}
+              onClick={() => onPostData()}
             >
               Добавить студента
             </button>
@@ -191,9 +193,11 @@ const AddingStudents = ({ active, setActive , addStudentThunk}) => {
 let mapStateToProps = (state) => {
   return {
     rooms: state.mainPage.rooms,
+    needHostel:state.need.needHostel
   };
 };
 
 export default connect(mapStateToProps, {
   addStudentThunk,
+  getNeedHostelThunk
 })(AddingStudents);

@@ -22,7 +22,18 @@ import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
 import adminDefs from "./roleDefs/AdminDefs";
 import curatorDefs from "./roleDefs/CuratorDefs";
+import userDefs from "./roleDefs/UserDefs";
 import { roles } from "./roles";
+
+import { ModuleRegistry } from "@ag-grid-community/core";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ExcelExportModule } from "@ag-grid-enterprise/excel-export";
+import { MenuModule } from "@ag-grid-enterprise/menu";
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  ExcelExportModule,
+  MenuModule,
+]);
 
 const GridExample = ({
   rooms,
@@ -42,7 +53,6 @@ const GridExample = ({
 
   function onCellValueChanged(event) {
     let currentPath = event.colDef.field;
-    console.log(event.data.students.currentPath);
     console.log(
       "onCellValueChanged: " + event.colDef.field + " = " + event.newValue
     );
@@ -104,7 +114,7 @@ const GridExample = ({
       ? adminDefs
       : roles.find((role) => role === "CURATOR")
       ? curatorDefs
-      : [],
+      : userDefs,
   };
 
   const onGridReady = useCallback(
@@ -176,6 +186,10 @@ const GridExample = ({
     setModalAdd(true);
   };
 
+  const onBtExport = useCallback(() => {
+    gridRef.current.api.exportDataAsExcel();
+  }, []);
+
   const loadingCellRenderer = useCallback(<Loader />);
 
   const localeText = useMemo(() => {
@@ -209,25 +223,41 @@ const GridExample = ({
       <AddingStudents active={modalAdd} setActive={setModalAdd} />
       <div className="containerGrid">
         <div className="btn-contol-block">
-          <button className="btn-control" onClick={onRemoveSelected}>
-            Удалить студента
-          </button>
-          <button className="btn-control" onClick={onEditableSelected}>
-            Изменить студента
-          </button>
-          <button className="btn-control" type="button" onClick={OnAddStudents}>
-            Добавить студента
-          </button>
+          {roles.find((role) => role === "ADMIN") && (
+            <>
+              <button className="btn-control" onClick={onRemoveSelected}>
+                Удалить студента
+              </button>
+
+              <button className="btn-control" onClick={onEditableSelected}>
+                Изменить студента
+              </button>
+              <button
+                className="btn-control"
+                type="button"
+                onClick={OnAddStudents}
+              >
+                Добавить студента
+              </button>
+              <NavLink
+                to="/population"
+                className="btn-control"
+                onClick={() => setSelectedRoomThunk([])}
+              >
+                Кол-во свободных комнат
+              </NavLink>
+              <button
+                onClick={onBtExport}
+                className="btn-control"
+                type="button"
+              >
+                Архив
+              </button>
+            </>
+          )}
 
           <NavLink to="/char" className="btn-control">
             Характеристика
-          </NavLink>
-          <NavLink
-            to="/population"
-            className="btn-control"
-            onClick={() => setSelectedRoomThunk([])}
-          >
-            Кол-во свободных комнат
           </NavLink>
         </div>
 
