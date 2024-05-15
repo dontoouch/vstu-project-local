@@ -1,5 +1,5 @@
 
-import {SET_ROOMS , SET_ROOM , DELETE_ROOM, ADD_STUDENT, SET_SELECTED_ROOM , GET_SELECTED_ROOM, ADD_PUNISHMENTS, DELETE_PUNISHMENTS } from "../types/mainTypes";
+import {SET_ROOMS , SET_ROOM , DELETE_ROOM, ADD_STUDENT, SET_SELECTED_ROOM , GET_SELECTED_ROOM, ADD_PUNISHMENTS, DELETE_PUNISHMENTS, SET_NEED_HOSTEL } from "../types/mainTypes";
 
 // import {SET_ROOMS, SET_STUDENTS } from "../types/mainTypes";
 export const setRooms = (rooms) => ({
