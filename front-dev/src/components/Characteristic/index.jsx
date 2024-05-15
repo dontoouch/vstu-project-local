@@ -1,29 +1,31 @@
 import "./style.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef,useCallback } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  getRoomsThunk,
-  setRoomThunk,
-  deleteRoomsThunk,
-  setSelectedRoomThunk
-} from "../../redux/actions/mainThunks";
+
 import { connect } from "react-redux";
-import Select from "react-select";
+
 import PunishmentsGrid from "../GridPunishments/PunishmentsGrid";
 
-const Characteristic = ({ selectedRoom, rooms, setSelectedRoomThunk }) => {
+
+const Characteristic = ({ selectedRoom, rooms }) => {
   // const [neighbors, setNeighbors] = useState([]);
   const [selected, setSelected] = useState([]);
   const [roomsData, setRoomsData] = useState([]);
+
 
   useEffect(() => {
     setSelected(selectedRoom[0]);
     setRoomsData(rooms);
   }, [selectedRoom, rooms]);
 
+
+
+
   return (
+    
     <div className="container">
+      
       <div className="header-char">
         <h3>Характеристика</h3>
         <div className="select-char">
@@ -184,6 +186,7 @@ const Characteristic = ({ selectedRoom, rooms, setSelectedRoomThunk }) => {
             </div>
           </div>
         </div>
+      
         <p className="char__title">Взыскания</p>
 
         <PunishmentsGrid />
@@ -199,4 +202,4 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {setSelectedRoomThunk})(Characteristic);
+export default connect(mapStateToProps)(Characteristic);

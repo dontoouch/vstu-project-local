@@ -2,7 +2,10 @@
 // import {setRooms, setStudent } from "./mainActions";
 
 import { getRooms , deleteRooms } from "../../api/api";
-import { setRooms  , setRoom , addStudent, setSelectedRoom ,getSelectedRoom} from "./mainActions";
+import { setRooms  , setRoom , addStudent, setSelectedRoom ,getSelectedRoom,addPunishments, deletePunishments} from "./mainActions";
+
+
+
 
 export const getRoomsThunk = () => {
   return (dispatch) => {
@@ -36,6 +39,22 @@ export const addStudentThunk  = (roomStudent) => {
     dispatch(addStudent(roomStudent));
   };
 };
+//-------------------------------------------------
+export const addPunishmentsThunk  = (roomStudent) => {
+  return (dispatch) => {
+    dispatch(addPunishments(roomStudent));
+  };
+};
+
+
+export const deletePunishmentsThunk = (punishmentsId) => {
+  return (dispatch) => {
+    deletePunishments(punishmentsId).then((data) => {
+      dispatch(deletePunishments(data));
+    });
+  };
+};
+//-------------------------------------------------
 
 export const deleteRoomsThunk = (roomId) => {
   return (dispatch) => {
