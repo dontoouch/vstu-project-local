@@ -40,13 +40,11 @@ const ModalEdit = ({
     let currentRoom = roomInput;
     let currentType = roomType;
     // TODO currentType null
-    rooms.forEach((item) => {
       if (
-        item.roomNumber === prevStateRoom &&
-        item.roomType === prevStateType
+        currentRoom !== prevStateRoom && currentType !== prevStateType
       ) {
         fetch(
-          `http://localhost:3001/room/${item.id}/?roomNumber=${currentRoom} && roomType=${currentType}`,
+          `http://localhost:3001/room/${selected.id}/?roomNumber=${currentRoom} && roomType=${currentType}`,
           //TODO
           {
             method: "POST",
@@ -58,12 +56,13 @@ const ModalEdit = ({
           }
         ).then((response) => response.json());
       }
-    });
     setActive(false);
+    //TODO кол-во дней хз куда отправлять
     // setSelectedRoomThunk([])
   };
 
   const onSwap = () => {
+    if(currentName === undefined) return
     let tempRoomNumber = selected.roomNumber;
     let tempRoomType = selected.roomType;
     console.log(selected)
@@ -130,6 +129,7 @@ const ModalEdit = ({
               className="select"
               options={optionsName}
               onChange={(newValue) => setCurrentName(newValue.value)}
+              placeholder="Выберите с кем поменять "
               value={
                 currentName
                   ? optionsName.find((c) => c.value === currentName)

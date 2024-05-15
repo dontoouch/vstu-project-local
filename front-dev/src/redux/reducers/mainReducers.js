@@ -13,6 +13,8 @@ const mainReducer = (state = initialState, action) => {
         rooms: [...action.rooms],
       };
 
+      
+
       case SET_ROOM:
       // console.log(action)
       return {
